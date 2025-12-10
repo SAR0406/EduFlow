@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id // Clerk ID
+  email     String   @unique
+  name      String?
+  role      String   @default("STUDENT") // "INSTRUCTOR" | "STUDENT"
+  avatar    String?
+  bio       String?
+  createdAt DateTime @default(now())
+
+  organizedClasses  ClassSession[]     @relation("InstructorClasses")
+  enrollments       Enrollment[]
+  courses           Course[]           @relation("InstructorCourses")
+  courseEnrollments CourseEnrollment[] @relation("StudentCourseEnrollments")
+  reviews           Review[]           @relation("UserReviews")
+}
+
+model Course {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  thumbnail   String?
+  category    String   @default("General")
+  price       Float    @default(0)
+  status      String   @default("DRAFT") // DRAFT, PUBLISHED, ARCHIVED
+  viewCount   Int      @default(0)
+  instructorId String
+  instructor   User    @relation("InstructorCourses", fields: [instructorId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  sessions     ClassSession[]
+  enrollments  CourseEnrollment[]
+  reviews      Review[]
+}
+
+model CourseEnrollment {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation("StudentCourseEnrollments", fields: [userId], references: [id])
+  courseId   String
+  course     Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  enrolledAt DateTime @default(now())
+  
+  @@unique([userId, courseId])
+}
+
+model ClassSession {
+  id           String    @id @default(uuid())
+  title        String
+  description  String?
+  instructorId String
+  instructor   User      @relation("InstructorClasses", fields: [instructorId], references: [id])
+  courseId     String?
+  course       Course?   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  startTime    DateTime
+  endTime      DateTime?
+  status       String    @default("SCHEDULED") // SCHEDULED, LIVE, COMPLETED
+  roomId       String?   @unique
+  createdAt    DateTime  @default(now())
+  
+  enrollments Enrollment[]
+}
+
+model Enrollment {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  classId   String
+  class     ClassSession @relation(fields: [classId], references: [id], onDelete: Cascade)
+  joinedAt  DateTime @default(now())
+
+  @@unique([userId, classId])
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  rating    Int      // 1-5 stars
+  comment   String?
+  userId    String
+  user      User     @relation("UserReviews", fields: [userId], references: [id])
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, courseId])
+}
