@@ -1,28 +1,26 @@
-{
+{ 
   "name": "live-class",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "ws": "tsx server.ts",
-    "dev:all": "concurrently \"next dev\" \"tsx server.ts\"",
+    "dev": "tsx server.ts",
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
     "postinstall": "prisma generate"
   },
   "dependencies": {
-    "@clerk/nextjs": "^5.6.2",
-    "@prisma/client": "^5.22.0",
+    "@clerk/nextjs": "^6.36.1",
+    "@prisma/client": "5.22.0",
     "@radix-ui/react-slot": "^1.2.4",
     "@radix-ui/react-tabs": "^1.1.13",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "lucide-react": "^0.560.0",
-    "next": "^16.1.0",
-    "prisma": "^5.22.0",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.1",
+    "lucide-react": "^0.556.0",
+    "next": "16.0.8",
+    "prisma": "5.22.0",
+    "react": "19.2.1",
+    "react-dom": "19.2.1",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
     "tailwind-merge": "^3.4.0",
@@ -30,15 +28,14 @@
     "typewriter-effect": "^2.22.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.0.3",
-    "@types/node": "^20.12.12",
-    "@types/react": "^19.0.4",
-    "@types/react-dom": "^19.0.2",
-    "concurrently": "^9.0.0",
-    "eslint": "^9.13.0",
-    "eslint-config-next": "^16.1.0",
-    "tailwindcss": "^4.0.3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20.19.26",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.8",
+    "tailwindcss": "^4",
     "tsx": "^4.21.0",
-    "typescript": "^5.6.3"
+    "typescript": "^5"
   }
 }
