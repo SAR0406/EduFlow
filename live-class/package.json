@@ -12,7 +12,7 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.36.3",
+    "@clerk/nextjs": "^5.6.2",
     "@prisma/client": "^5.22.0",
     "@radix-ui/react-slot": "^1.2.4",
     "@radix-ui/react-tabs": "^1.1.13",
